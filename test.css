@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+body {
+    line-height: 200%;
+    margin-bottom: 5ex;
+}
+
+input[type="button"] {
+    width: 90%;
+    margin-top: 2ex;
+}
+
+table.border {
+    border: 1px outset gray;
+    border-collapse: collapse;
+}
+
+table.border tr th {
+    border: 1px inset gray;
+    padding: 0.5ex 1ex;
+}
+
+table.border tr td {
+    border: 1px inset gray;
+    padding: 0.5ex 1ex;
+}
+
+table.code {
+    font-family: "Courier New", monospace;
+}
+
+table.code tr td {
+    padding-right: 1ex;
+    vertical-align: top;
+}
+
+.symbol {
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+
+@media (min-width: 768px) {
+
+    body {
+        line-height: 150%;
+    }
+
+    input[type="button"] {
+        width: auto;
+    }
+
+}
+
