@@ -2,7 +2,7 @@
 var Controller = function() {
     // fields
     this._prev = "";
-    this._parser = new Parser(Grammar);
+    this._parser = new Parser(Grammar, Converter);
     this._validator = new Validator();
 
     // events
@@ -38,9 +38,9 @@ Controller.prototype = {
     "_analyze": function(e) {
         // initialize
         this._stop(e);
-        this._prev = this._patternText.value;
-        this._resultArea.innerHTML = "";
         this._validator.reset();
+        this._prev = this._validator.toSmall(this._patternText.value);
+        this._resultArea.innerHTML = "";
 
         // lexical and syntax analyze
         var result = this._parser.tokenize(this._prev);
@@ -80,12 +80,12 @@ Controller.prototype = {
         this._jmj.stopJuggling();
     },
 
-    // show the error string
+    // write the error string
     "_setError": function(title, valid, invalid) {
         // does the valid text exist?
         if (0 < valid.length) {
-            valid = "OK : " + valid;
-            invalid = "NG : " + invalid;
+            valid = "OK: " + valid;
+            invalid = "NG: " + invalid;
         }
 
         // write to the DOM elements
@@ -102,7 +102,7 @@ Controller.prototype = {
         this._resultArea.appendChild(ng);
     },
 
-    // show the result string
+    // write the result string
     "_setResult": function(tree) {
         var head = document.createElement("div");
         this._resultArea.appendChild(head);
@@ -121,9 +121,9 @@ Controller.prototype = {
         var balls = document.createElement("div");
         var period = document.createElement("div");
         var state = document.createElement("div");
-        balls.innerHTML = "balls : " + this._validator.balls;
-        period.innerHTML = "period : " + this._validator.period;
-        state.innerHTML = "state : " + this._validator.state.join(" ");
+        balls.innerHTML = "balls: " + this._validator.balls;
+        period.innerHTML = "period: " + this._validator.period;
+        state.innerHTML = "state: " + this._validator.state.join(" ");
         this._resultArea.appendChild(balls);
         this._resultArea.appendChild(period);
         this._resultArea.appendChild(state);

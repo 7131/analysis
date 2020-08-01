@@ -9,7 +9,7 @@ var ColNum = {
 // Controller class
 var Controller = function() {
     // fields
-    this._parser = new Parser(Grammar);
+    this._parser = new Parser(Grammar, Converter);
     this._validator = new Validator();
 
     // events
@@ -19,9 +19,17 @@ var Controller = function() {
 // Controller prototype
 Controller.prototype = {
 
-    // initialize the private fields
+    // initialize the page
     "_initialize": function() {
         this._rows = document.getElementById("patterns").rows;
+        for (var i = 1; i < this._rows.length; i++) {
+            // No.
+            var number = this._rows[i].cells[ColNum.NUMBER];
+            number.innerText = i;
+            number.className = "symbol";
+        }
+
+        // button events
         var execute = document.getElementById("execute");
         execute.addEventListener("click", this._start.bind(this), false);
     },
@@ -34,10 +42,7 @@ Controller.prototype = {
 
         // initialize table
         for (var i = 1; i < this._rows.length; i++) {
-            var row = this._rows[i];
-            row.cells[ColNum.RESULT].innerText = "";
-            row.cells[ColNum.RESULT].className = "";
-            row.cells[ColNum.NUMBER].className = "symbol";
+            this._rows[i].cells[ColNum.RESULT].innerText = "";
         }
 
         // execute the first test
@@ -50,7 +55,7 @@ Controller.prototype = {
         // prepare the test
         var row = this._rows[this._index];
         row.cells[ColNum.NUMBER].innerText = this._index;
-        var pattern = row.cells[ColNum.TARGET].innerText;
+        var pattern = this._validator.toSmall(row.cells[ColNum.TARGET].innerText);
 
         // analyze the siteswap pattern
         var result = this._parser.tokenize(pattern);
@@ -77,6 +82,7 @@ Controller.prototype = {
         var row = this._rows[this._index];
         if (text.trim() == row.cells[ColNum.EXPECT].innerText) {
             row.cells[ColNum.RESULT].innerText = "OK";
+            row.cells[ColNum.RESULT].className = "";
         } else {
             row.cells[ColNum.RESULT].innerText = text;
             row.cells[ColNum.RESULT].className = "error";

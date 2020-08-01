@@ -5,8 +5,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" type="text/css" href="./test.css">
-<script src="https://yuji-k64613.github.io/jmjs/tmp/v/0.1/js/jmjs.js"></script>
-<script src="./siteswap.js"></script>
+<script src="./grammar.js"></script>
+<script src="./parser.js"></script>
+<script src="./validator.js"></script>
 <script src="./test.js"></script>
 <title>Test the Siteswap Analyzer</title>
 </head>
@@ -35,8 +36,8 @@
   <tr><td></td><td>1+2</td><td>unknown character(s): +2</td><td></td>
   <tr><td></td><td>1 + 2</td><td>unknown character(s): + 2</td><td></td>
   <tr><td></td><td>*</td><td>syntax error: *</td><td></td>
-  <tr><td></td><td>1*2</td><td>syntax error: *2</td><td></td>
-  <tr><td></td><td>1 * 2</td><td>syntax error: *2</td><td></td>
+  <tr><td></td><td>1*2</td><td>syntax error: * 2</td><td></td>
+  <tr><td></td><td>1 * 2</td><td>syntax error: * 2</td><td></td>
   <tr><td></td><td>12</td><td>Invalid</td><td></td>
   <tr><td></td><td>20</td><td>1</td><td></td>
   <tr><td></td><td>02</td><td>0 1</td><td></td>
@@ -48,42 +49,42 @@
   <tr><td></td><td>&#xFF25;&#xFF26;&#xFF27;</td><td>1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1</td><td></td>
   <tr><td></td><td>[12]</td><td>2 1</td><td></td>
   <tr><td></td><td>[34]</td><td>2 2 2 1</td><td></td>
-  <tr><td></td><td>[30]</td><td>syntax error: 0]</td><td></td>
+  <tr><td></td><td>[30]</td><td>syntax error: 0 ]</td><td></td>
   <tr><td></td><td>[3]</td><td>syntax error: ]</td><td></td>
   <tr><td></td><td>3[]</td><td>syntax error: ]</td><td></td>
   <tr><td></td><td>[]</td><td>syntax error: ]</td><td></td>
   <tr><td></td><td>[34</td><td>syntax error:</td><td></td>
   <tr><td></td><td>[34[</td><td>syntax error: [</td><td></td>
   <tr><td></td><td>34]</td><td>syntax error: ]</td><td></td>
-  <tr><td></td><td>]34]</td><td>syntax error: ]34]</td><td></td>
-  <tr><td></td><td>[3[12]]</td><td>syntax error: [12]]</td><td></td>
+  <tr><td></td><td>]34]</td><td>syntax error: ] 3 4 ]</td><td></td>
+  <tr><td></td><td>[3[12]]</td><td>syntax error: [ 1 2 ] ]</td><td></td>
   <tr><td></td><td>20[34]</td><td>1 0 1 1</td><td></td>
   <tr><td></td><td>[34][32]</td><td>2 2 2</td><td></td>
   <tr><td></td><td>[34][32]0</td><td>2 2</td><td></td>
   <tr><td></td><td>[123]</td><td>3 2 1</td><td></td>
   <tr><td></td><td>[4567]</td><td>4 4 4 4 3 2 1</td><td></td>
   <tr><td></td><td>(4,2)</td><td>1 1 1</td><td></td>
-  <tr><td></td><td>(4,3)</td><td>syntax error: 3)</td><td></td>
-  <tr><td></td><td>(4,22)</td><td>syntax error: 2)</td><td></td>
-  <tr><td></td><td>(44,2)</td><td>syntax error: 4,2)</td><td></td>
-  <tr><td></td><td>(4,4,2)</td><td>syntax error: ,2)</td><td></td>
-  <tr><td></td><td>(4,(4,2))</td><td>syntax error: (4,2))</td><td></td>
-  <tr><td></td><td>(4,(2))</td><td>syntax error: (2))</td><td></td>
-  <tr><td></td><td>(4,2())</td><td>syntax error: ())</td><td></td>
-  <tr><td></td><td>(4,2()</td><td>syntax error: ()</td><td></td>
+  <tr><td></td><td>(4,3)</td><td>syntax error: 3 )</td><td></td>
+  <tr><td></td><td>(4,22)</td><td>syntax error: 2 )</td><td></td>
+  <tr><td></td><td>(44,2)</td><td>syntax error: 4 , 2 )</td><td></td>
+  <tr><td></td><td>(4,4,2)</td><td>syntax error: , 2 )</td><td></td>
+  <tr><td></td><td>(4,(4,2))</td><td>syntax error: ( 4 , 2 ) )</td><td></td>
+  <tr><td></td><td>(4,(2))</td><td>syntax error: ( 2 ) )</td><td></td>
+  <tr><td></td><td>(4,2())</td><td>syntax error: ( ) )</td><td></td>
+  <tr><td></td><td>(4,2()</td><td>syntax error: ( )</td><td></td>
   <tr><td></td><td>(4,2))</td><td>syntax error: )</td><td></td>
   <tr><td></td><td>(4,2)(</td><td>syntax error:</td><td></td>
   <tr><td></td><td>(4,2</td><td>syntax error:</td><td></td>
   <tr><td></td><td>(4,)</td><td>syntax error: )</td><td></td>
   <tr><td></td><td>(4,</td><td>syntax error:</td><td></td>
   <tr><td></td><td>(4)</td><td>syntax error: )</td><td></td>
-  <tr><td></td><td>(42)</td><td>syntax error: 2)</td><td></td>
-  <tr><td></td><td>4,2)</td><td>syntax error: ,2)</td><td></td>
-  <tr><td></td><td>4,2</td><td>syntax error: ,2</td><td></td>
+  <tr><td></td><td>(42)</td><td>syntax error: 2 )</td><td></td>
+  <tr><td></td><td>4,2)</td><td>syntax error: , 2 )</td><td></td>
+  <tr><td></td><td>4,2</td><td>syntax error: , 2</td><td></td>
   <tr><td></td><td>4)</td><td>syntax error: )</td><td></td>
   <tr><td></td><td>(4,2)3</td><td>syntax error: 3</td><td></td>
-  <tr><td></td><td>(4,x)</td><td>syntax error: x)</td><td></td>
-  <tr><td></td><td>(4,x2)</td><td>syntax error: x2)</td><td></td>
+  <tr><td></td><td>(4,x)</td><td>syntax error: x )</td><td></td>
+  <tr><td></td><td>(4,x2)</td><td>syntax error: x 2 )</td><td></td>
   <tr><td></td><td>(4,2x)</td><td>Invalid</td><td></td>
   <tr><td></td><td>(4,2x)(2x,4)</td><td>1 1 0 1</td><td></td>
   <tr><td></td><td>(4,2x)*</td><td>1 1 0 1</td><td></td>
@@ -93,7 +94,7 @@
   <tr><td></td><td>(4x,6x)(2,4)</td><td>1 1 1 1</td><td></td>
   <tr><td></td><td>(6,4)([44x],2x)</td><td>1 1 2 1</td><td></td>
   <tr><td></td><td>(2,4)([44x],2x)*</td><td>1 1 1 1</td><td></td>
-  <tr><td></td><td>[(4,2)]</td><td>syntax error: (4,2)]</td><td></td>
+  <tr><td></td><td>[(4,2)]</td><td>syntax error: ( 4 , 2 ) ]</td><td></td>
 </table>
 <input type="button" id="execute" value="Execute">
 

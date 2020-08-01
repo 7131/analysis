@@ -11,12 +11,16 @@ You can also demonstrate using JuggleMaster JavaScript.
     <dd>This is the main page for the Siteswap Analyzer.</dd>
   <dt>default.css</dt>
     <dd>The style sheet for the main page.</dd>
-  <dt>siteswap.js</dt>
-    <dd>The classes of the grammar, parser, syntax tree, and siteswap validator.</dd>
+  <dt>grammar.js</dt>
+    <dd>The grammar object and the syntax converter.</dd>
+  <dt>parser.js</dt>
+    <dd>Classes for parser, token, syntax tree, and state stack.</dd>
+  <dt>validator.js</dt>
+    <dd>A siteswap validation class.</dd>
   <dt>controller.js</dt>
     <dd>This is a controller that receives the input of the main page and outputs the analysis result.</dd>
   <dt>test.html</dt>
-    <dd>This is a page for testing siteswap.js.</dd>
+    <dd>This is a page for testing the Siteswap Analyzer.</dd>
   <dt>test.css</dt>
     <dd>The style sheet for the test page.</dd>
   <dt>test.js</dt>
