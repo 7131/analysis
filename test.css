@@ -1,8 +1,7 @@
 @charset "utf-8";
 
-body {
-    line-height: 200%;
-    margin-bottom: 5ex;
+article {
+    margin-bottom: 10ex;
 }
 
 input[type="button"] {
@@ -43,10 +42,6 @@ table.code tr td {
 }
 
 @media (min-width: 768px) {
-
-    body {
-        line-height: 150%;
-    }
 
     input[type="button"] {
         width: auto;
