@@ -1,5 +1,5 @@
 // Column number constants
-var ColNum = {
+const ColNum = {
     "NUMBER": 0,
     "TARGET": 1,
     "EXPECT": 2,
@@ -7,7 +7,7 @@ var ColNum = {
 }
 
 // Controller class
-var Controller = function() {
+const Controller = function() {
     // fields
     this._parser = new Parser(Grammar, Converter);
     this._validator = new Validator();
@@ -22,15 +22,15 @@ Controller.prototype = {
     // initialize the page
     "_initialize": function() {
         this._rows = document.getElementById("patterns").rows;
-        for (var i = 1; i < this._rows.length; i++) {
+        for (let i = 1; i < this._rows.length; i++) {
             // No.
-            var number = this._rows[i].cells[ColNum.NUMBER];
+            const number = this._rows[i].cells[ColNum.NUMBER];
             number.innerText = i;
             number.className = "symbol";
         }
 
         // button events
-        var execute = document.getElementById("execute");
+        const execute = document.getElementById("execute");
         execute.addEventListener("click", this._start.bind(this), false);
     },
 
@@ -41,7 +41,7 @@ Controller.prototype = {
         this._button.disabled = true;
 
         // initialize table
-        for (var i = 1; i < this._rows.length; i++) {
+        for (let i = 1; i < this._rows.length; i++) {
             this._rows[i].cells[ColNum.RESULT].innerText = "";
         }
 
@@ -53,20 +53,20 @@ Controller.prototype = {
     // execute a test
     "_execute": function() {
         // prepare the test
-        var row = this._rows[this._index];
+        const row = this._rows[this._index];
         row.cells[ColNum.NUMBER].innerText = this._index;
-        var pattern = this._validator.toSmall(row.cells[ColNum.TARGET].innerText);
+        const pattern = this._validator.toSmall(row.cells[ColNum.TARGET].innerText);
 
         // analyze the siteswap pattern
-        var result = this._parser.tokenize(pattern);
-        if (result.tokens == null) {
-            this._showResult("unknown character(s): " + result.invalid);
+        const lex = this._parser.tokenize(pattern);
+        if (lex.tokens == null) {
+            this._showResult("unknown character(s): " + lex.invalid);
         } else {
-            result = this._parser.parse(result.tokens);
-            if (result.tree == null) {
-                this._showResult("syntax error: " + result.invalid);
+            const syntax = this._parser.parse(lex.tokens);
+            if (syntax.tree == null) {
+                this._showResult("syntax error: " + syntax.invalid);
             } else {
-                this._validator.validate(result.tree);
+                this._validator.validate(syntax.tree);
                 if (this._validator.valid) {
                     this._showResult(this._validator.state.join(" "));
                 } else {
@@ -79,7 +79,7 @@ Controller.prototype = {
     // show the result string
     "_showResult": function(text) {
         // get the result string
-        var row = this._rows[this._index];
+        const row = this._rows[this._index];
         if (text.trim() == row.cells[ColNum.EXPECT].innerText) {
             row.cells[ColNum.RESULT].innerText = "OK";
             row.cells[ColNum.RESULT].className = "";

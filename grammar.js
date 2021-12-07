@@ -1,5 +1,5 @@
 // Grammar object
-var Grammar = {
+const Grammar = {
 
     "flag": "i",
 
@@ -112,7 +112,7 @@ var Grammar = {
 }
 
 // Syntax converter
-var Converter = {
+const Converter = {
 
     // Pattern ::= Async | Synch ;
     "Pattern": function(tree) {

@@ -1,5 +1,5 @@
 // Controller class
-var Controller = function() {
+const Controller = function() {
     // fields
     this._prev = "";
     this._parser = new Parser(Grammar, Converter);
@@ -28,7 +28,7 @@ Controller.prototype = {
         this._stopButton.addEventListener("click", this._stop.bind(this), false);
 
         // JuggleMaster
-        var board = document.getElementById("board");
+        const board = document.getElementById("board");
         board.width = board.clientWidth;
         board.height = board.width;
         this._jmj = new Jmj({ "canvas": board });
@@ -43,17 +43,17 @@ Controller.prototype = {
         this._resultArea.innerHTML = "";
 
         // lexical and syntax analyze
-        var result = this._parser.tokenize(this._prev);
-        if (result.tokens == null) {
-            this._setError("unknown character(s)", result.valid, result.invalid);
+        const lex = this._parser.tokenize(this._prev);
+        if (lex.tokens == null) {
+            this._setError("unknown character(s)", lex.valid, lex.invalid);
             return;
         }
-        result = this._parser.parse(result.tokens);
-        if (result.tree == null) {
-            this._setError("syntax error", result.valid, result.invalid);
+        const syntax = this._parser.parse(lex.tokens);
+        if (syntax.tree == null) {
+            this._setError("syntax error", syntax.valid, syntax.invalid);
             return;
         }
-        this._setResult(result.tree);
+        this._setResult(syntax.tree);
     },
 
     // "Start" button process
@@ -68,7 +68,7 @@ Controller.prototype = {
         }
 
         // start
-        var obj = { "siteswap": this._validator.pattern, "showSiteswap": false };
+        const obj = { "siteswap": this._validator.pattern, "showSiteswap": false };
         if (!this._jmj.startJuggling(obj)) {
             this._messageArea.innerHTML = "JuggleMaster error";
             this._messageArea.className = "error";
@@ -89,9 +89,9 @@ Controller.prototype = {
         }
 
         // write to the DOM elements
-        var head = document.createElement("div");
-        var ok = document.createElement("div");
-        var ng = document.createElement("div");
+        const head = document.createElement("div");
+        const ok = document.createElement("div");
+        const ng = document.createElement("div");
         head.innerHTML = title;
         head.className = "error";
         ok.innerHTML = valid;
@@ -104,7 +104,7 @@ Controller.prototype = {
 
     // write the result string
     "_setResult": function(tree) {
-        var head = document.createElement("div");
+        const head = document.createElement("div");
         this._resultArea.appendChild(head);
 
         // get the result
@@ -118,9 +118,9 @@ Controller.prototype = {
 
         // siteswap
         head.innerHTML = "Valid";
-        var balls = document.createElement("div");
-        var period = document.createElement("div");
-        var state = document.createElement("div");
+        const balls = document.createElement("div");
+        const period = document.createElement("div");
+        const state = document.createElement("div");
         balls.innerHTML = "balls: " + this._validator.balls;
         period.innerHTML = "period: " + this._validator.period;
         state.innerHTML = "state: " + this._validator.state.join(" ");
