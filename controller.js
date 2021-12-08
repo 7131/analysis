@@ -1,7 +1,15 @@
 // Controller class
 const Controller = function() {
-    // fields
+    // get the query string
     this._prev = "";
+    if (window.location.search != "") {
+        let results = window.location.search.match(/[?&]pattern=([^&#]*)/);
+        if (2 <= results.length) {
+            this._prev = decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    }
+
+    // other fields
     this._parser = new Parser(Grammar, Converter);
     this._validator = new Validator();
 
@@ -32,6 +40,12 @@ Controller.prototype = {
         board.width = board.clientWidth;
         board.height = board.width;
         this._jmj = new Jmj({ "canvas": board });
+
+        // analyze the query string
+        if (this._prev != "") {
+            this._patternText.value = this._prev;
+            this._analyze({});
+        }
     },
 
     // "Analyze" button process
