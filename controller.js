@@ -1,15 +1,7 @@
 // Controller class
 const Controller = function() {
-    // get the query string
+    // fields
     this._prev = "";
-    if (window.location.search != "") {
-        let results = window.location.search.match(/[?&]pattern=([^&#]*)/);
-        if (2 <= results.length) {
-            this._prev = decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-    }
-
-    // other fields
     this._parser = new Parser(Grammar, Converter);
     this._validator = new Validator();
 
@@ -42,10 +34,26 @@ Controller.prototype = {
         this._jmj = new Jmj({ "canvas": board });
 
         // analyze the query string
-        if (this._prev != "") {
-            this._patternText.value = this._prev;
-            this._analyze({});
+        const pattern = this._getParam("pattern");
+        if (pattern != "") {
+            this._patternText.value = pattern;
+            const run = this._getParam("run");
+            if (run == "yes" || run == "true") {
+                this._start({});
+            } else {
+                this._analyze({});
+            }
         }
+    },
+
+    // get the query parameter
+    "_getParam": function(key) {
+        const pattern = new RegExp("[?&]" + key + "=([^&]*)");
+        const value = window.location.search.match(pattern);
+        if (!Array.isArray(value)) {
+            return "";
+        }
+        return decodeURIComponent(value[1].replace(/\+/g, " "));
     },
 
     // "Analyze" button process
