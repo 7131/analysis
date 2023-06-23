@@ -9,8 +9,9 @@ input {
     width: 90%;
 }
 
-input[type="button"] {
+button {
     margin-top: 2ex;
+    width: 90%;
 }
 
 svg {
@@ -37,7 +38,7 @@ svg {
         width: 300px;
     }
 
-    input[type="button"] {
+    button {
         margin-top: 0ex;
         width: auto;
     }
