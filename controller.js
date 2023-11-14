@@ -22,27 +22,17 @@ Controller.prototype = {
         stop.addEventListener("click", this._stop.bind(this), false);
 
         // analyze the query string
-        this._prev = "";
-        const pattern = this._getParam("pattern");
-        if (pattern != "") {
-            this._patternText.value = pattern;
-            const run = this._getParam("run");
+        const params = new URLSearchParams(window.location.search.toLowerCase());
+        if (params.has("pattern")) {
+            this._patternText.value = params.get("pattern");
+            const run = params.get("run");
             if (run == "yes" || run == "true") {
                 this._start(e);
             } else {
                 this._analyze(e);
             }
         }
-    },
-
-    // get the query parameter
-    "_getParam": function(key) {
-        const pattern = new RegExp("[?&]" + key + "=([^&]*)");
-        const value = window.location.search.match(pattern);
-        if (!Array.isArray(value)) {
-            return "";
-        }
-        return decodeURIComponent(value[1].replace(/\+/g, " "));
+        this._prev = "";
     },
 
     // "Analyze" button process
