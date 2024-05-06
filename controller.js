@@ -1,6 +1,6 @@
 // Controller class
 const Controller = function() {
-    window.addEventListener("load", this._initialize.bind(this), false);
+    window.addEventListener("load", this._initialize.bind(this));
 }
 
 // Controller prototype
@@ -17,9 +17,9 @@ Controller.prototype = {
         const stop = document.getElementById("stop");
 
         // button events
-        analyze.addEventListener("click", this._analyze.bind(this), false);
-        start.addEventListener("click", this._start.bind(this), false);
-        stop.addEventListener("click", this._stop.bind(this), false);
+        analyze.addEventListener("click", this._analyze.bind(this));
+        start.addEventListener("click", this._start.bind(this));
+        stop.addEventListener("click", this._stop.bind(this));
 
         // analyze the query string
         const params = new URLSearchParams(window.location.search.toLowerCase());
