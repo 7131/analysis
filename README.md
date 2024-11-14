@@ -1,17 +1,19 @@
 # Siteswap Analyzer
 
+https://7131.github.io/analysis/
+
 You can analyze siteswaps.
-If the siteswap is valid, the number of balls, the period, and the state are displayed respectively.
+If the input string is a valid siteswap, the number of balls, the period, and the state are displayed, respectively.
 You can also demonstrate using juggling simulator.
 
-# File list
+This analyzer accepts vanilla, multiplex, and synchronous patterns.
 
 <dl>
-  <dt>index.html</dt>
-    <dd>This is the main page for the Siteswap Analyzer.</dd>
-  <dt>default.css</dt>
-    <dd>The style sheet for the main page.</dd>
-  <dt>controller.js</dt>
-    <dd>This is a controller that receives the input of the main page and outputs the analysis result.</dd>
+  <dt>Vanilla siteswap</dt>
+    <dd>is a string of letters consisting only of numbers and letters of the alphabet. For example, 3, 441, 7131, db97531, etc.</dd>
+  <dt>Multiplexing</dt>
+    <dd>uses square brackets in addition to vanilla. It will allow multiple props to be grouped together. For example, [123], [34]23, [34][32]0, etc.</dd>
+  <dt>Synchronous pattern</dt>
+    <dd>is expressed using round brackets and commas (and the letter 'x'). For example, (4x,2x), (6x,0)*, (2,4)([44x],2x), etc.</dd>
 </dl>
 
