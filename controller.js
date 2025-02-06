@@ -40,7 +40,7 @@ Controller.prototype = {
         // initialize
         this._stop(e);
         this._resultArea.innerHTML = "";
-        this._resultArea.className = "";
+        this._resultArea.classList.remove("error");
         this._prev = this._patternText.value;
 
         // siteswap analysis
@@ -49,7 +49,7 @@ Controller.prototype = {
             this._setResult(result);
         } else {
             this._resultArea.innerHTML = result.message;
-            this._resultArea.className = "error";
+            this._resultArea.classList.add("error");
         }
     },
 
@@ -64,7 +64,7 @@ Controller.prototype = {
         const message = this._facade.startJuggling(this._patternText.value);
         if (message != "") {
             this._resultArea.innerHTML = message;
-            this._resultArea.className = "error";
+            this._resultArea.classList.add("error");
         }
     },
 
