@@ -87,9 +87,9 @@ Controller.prototype = {
 
         // display the results
         head.innerHTML = "Valid";
-        balls.innerHTML = "balls: " + result.count;
-        period.innerHTML = "period: " + result.period;
-        state.innerHTML = "state: " + result.state.join(" ");
+        balls.innerHTML = `balls: ${result.count}`;
+        period.innerHTML = `period: ${result.period}`;
+        state.innerHTML = `state: ${result.state.join(" ")}`;
     },
 
 }
