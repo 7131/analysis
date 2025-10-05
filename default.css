@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-article {
+main {
     line-height: 1.8;
     margin-bottom: 10ex;
 }
@@ -30,7 +30,7 @@ svg {
 
 @media (orientation: landscape) {
 
-    article {
+    main {
         line-height: 1.5;
     }
 
