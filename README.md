@@ -1,6 +1,7 @@
 # Siteswap Analyzer
 
-https://7131.github.io/analysis/
+English site: https://7131.github.io/analysis/<br>
+Japanese site: https://app.7131.jp/analysis/
 
 You can analyze siteswaps.
 If the input string is a valid siteswap, the number of balls, the period, and the state are displayed, respectively.
