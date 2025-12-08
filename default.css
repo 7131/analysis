@@ -35,48 +35,31 @@ svg {
     }
 
     input {
-        width: 90vh;
+        width: 70vh;
     }
 
     button {
-        width: 90vh;
+        margin-top: 0ex;
+        width: auto;
     }
 
     svg {
-        width: 90vh;
-        height: 90vh;
+        width: 70vh;
+        height: 70vh;
     }
 
-    @media (min-width: 768px) {
+    .table {
+        display: table;
+    }
 
-        #pattern {
-            width: 300px;
-        }
+    .table .row {
+        display: table-row;
+    }
 
-        button {
-            margin-top: 0ex;
-            width: auto;
-        }
-
-        svg {
-            width: 300px;
-            height: 300px;
-        }
-
-        .table {
-            display: table;
-        }
-
-        .table .row {
-            display: table-row;
-        }
-
-        .table .row .cell {
-            display: table-cell;
-            padding: 0.5ex 2ex 0.5ex 0ex;
-            vertical-align: middle;
-        }
-
+    .table .row .cell {
+        display: table-cell;
+        padding: 0.5ex 2ex 0.5ex 0ex;
+        vertical-align: middle;
     }
 
 }
