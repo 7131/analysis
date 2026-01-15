@@ -39,7 +39,7 @@ Controller.prototype = {
     "_analyze": function(e) {
         // initialize
         this._stop(e);
-        this._resultArea.innerHTML = "";
+        this._resultArea.textContent = "";
         this._resultArea.classList.remove("error");
         this._prev = this._patternText.value;
 
@@ -48,7 +48,7 @@ Controller.prototype = {
         if (result.valid) {
             this._setResult(result);
         } else {
-            this._resultArea.innerHTML = result.message;
+            this._resultArea.textContent = result.message;
             this._resultArea.classList.add("error");
         }
     },
@@ -63,7 +63,7 @@ Controller.prototype = {
         // start
         const message = this._facade.startJuggling(this._patternText.value);
         if (message != "") {
-            this._resultArea.innerHTML = message;
+            this._resultArea.textContent = message;
             this._resultArea.classList.add("error");
         }
     },
@@ -86,10 +86,10 @@ Controller.prototype = {
         this._resultArea.appendChild(state);
 
         // display the results
-        head.innerHTML = "Valid";
-        balls.innerHTML = `balls: ${result.count}`;
-        period.innerHTML = `period: ${result.period}`;
-        state.innerHTML = `state: ${result.state.join(" ")}`;
+        head.textContent = "Valid";
+        balls.textContent = `balls: ${result.count}`;
+        period.textContent = `period: ${result.period}`;
+        state.textContent = `state: ${result.state.join(" ")}`;
     },
 
 }
