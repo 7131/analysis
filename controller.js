@@ -1,96 +1,99 @@
 // Controller class
-const Controller = function() {
-    window.addEventListener("load", this._initialize.bind(this));
-}
+class Controller {
+    #facade;
+    #patternText;
+    #resultArea;
+    #prev = "";
 
-// Controller prototype
-Controller.prototype = {
+    // constructor
+    constructor() {
+        window.addEventListener("load", this.#initialize.bind(this));
+    }
 
     // initialize the private fields
-    "_initialize": function(e) {
+    #initialize(e) {
         // DOM elements
-        this._facade = new jmotion.Facade("#board");
-        this._patternText = document.getElementById("pattern");
-        this._resultArea = document.getElementById("result");
+        this.#facade = new jmotion.Facade("#board");
+        this.#patternText = document.getElementById("pattern");
+        this.#resultArea = document.getElementById("result");
         const analyze = document.getElementById("analyze");
         const start = document.getElementById("start");
         const stop = document.getElementById("stop");
 
         // button events
-        analyze.addEventListener("click", this._analyze.bind(this));
-        start.addEventListener("click", this._start.bind(this));
-        stop.addEventListener("click", this._stop.bind(this));
+        analyze.addEventListener("click", this.#analyze.bind(this));
+        start.addEventListener("click", this.#start.bind(this));
+        stop.addEventListener("click", this.#stop.bind(this));
 
         // analyze the query string
         const params = new URLSearchParams(window.location.search.toLowerCase());
         if (params.has("pattern")) {
-            this._patternText.value = params.get("pattern");
+            this.#patternText.value = params.get("pattern");
             const run = params.get("run");
             if (run == "yes" || run == "true") {
-                this._start(e);
+                this.#start(e);
             } else {
-                this._analyze(e);
+                this.#analyze(e);
             }
         }
-        this._prev = "";
-    },
+    }
 
     // "Analyze" button process
-    "_analyze": function(e) {
+    #analyze(e) {
         // initialize
-        this._stop(e);
-        this._resultArea.textContent = "";
-        this._resultArea.classList.remove("error");
-        this._prev = this._patternText.value;
+        this.#stop(e);
+        this.#resultArea.textContent = "";
+        this.#resultArea.classList.remove("error");
+        this.#prev = this.#patternText.value;
 
         // siteswap analysis
-        const result = jmotion.Siteswap.analyze(this._prev);
+        const result = jmotion.Siteswap.analyze(this.#prev);
         if (result.valid) {
-            this._setResult(result);
+            this.#setResult(result);
         } else {
-            this._resultArea.textContent = result.message;
-            this._resultArea.classList.add("error");
+            this.#resultArea.textContent = result.message;
+            this.#resultArea.classList.add("error");
         }
-    },
+    }
 
     // "Start" button process
-    "_start": function(e) {
+    #start(e) {
         // validate input text
-        if (this._patternText.value != this._prev) {
-            this._analyze(e);
+        if (this.#patternText.value != this.#prev) {
+            this.#analyze(e);
         }
 
         // start
-        const message = this._facade.startJuggling(this._patternText.value);
+        const message = this.#facade.startJuggling(this.#patternText.value);
         if (message != "") {
-            this._resultArea.textContent = message;
-            this._resultArea.classList.add("error");
+            this.#resultArea.textContent = message;
+            this.#resultArea.classList.add("error");
         }
-    },
+    }
 
     // "Stop" button process
-    "_stop": function(e) {
-        this._facade.stopJuggling();
-    },
+    #stop(e) {
+        this.#facade.stopJuggling();
+    }
 
     // write the result string
-    "_setResult": function(result) {
+    #setResult(result) {
         // create DOM elements
         const head = document.createElement("div");
         const balls = document.createElement("div");
         const period = document.createElement("div");
         const state = document.createElement("div");
-        this._resultArea.appendChild(head);
-        this._resultArea.appendChild(balls);
-        this._resultArea.appendChild(period);
-        this._resultArea.appendChild(state);
+        this.#resultArea.appendChild(head);
+        this.#resultArea.appendChild(balls);
+        this.#resultArea.appendChild(period);
+        this.#resultArea.appendChild(state);
 
         // display the results
         head.textContent = "Valid";
         balls.textContent = `balls: ${result.count}`;
         period.textContent = `period: ${result.period}`;
         state.textContent = `state: ${result.state.join(" ")}`;
-    },
+    }
 
 }
 
